@@ -36,7 +36,7 @@ dwelling1.load_level = function()
     moving_totems.activate(level_state)
     timed_doors.activate(level_state, 100)
     inverse_timed_doors.activate(level_state, 100)
-    monster_generator.activate(level_state, ENT_TYPE.MONS_UFO)
+    monster_generator.activate(level_state, ENT_TYPE.MONS_BAT)
 
     checkpoints.activate()
     checkpoints.checkpoint_activate_callback(function(x, y, layer, time)
