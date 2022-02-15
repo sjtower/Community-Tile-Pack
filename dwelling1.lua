@@ -1,5 +1,7 @@
 local checkpoints = require("Checkpoints/checkpoints")
 local nocrap = require("Modules.Dregu.no_crap")
+local faster_bullets = require("Modules.Dregu.faster_bullets")
+local fast_push_blocks = require("Modules.Dregu.fast_push_block")
 local death_blocks = require("Modules.JawnGC.death_blocks")
 local moving_totems = require("Modules.JayTheBusinessGoose.moving_totems")
 local monster_generator = require("Modules.JayTheBusinessGoose.monster_generator")
@@ -31,6 +33,8 @@ dwelling1.load_level = function()
     if level_state.loaded then return end
     level_state.loaded = true
 
+    faster_bullets.activate(level_state)
+    fast_push_blocks.activate(level_state)
     death_blocks.activate(level_state)
     death_elevators.activate(level_state)
     moving_totems.activate(level_state)
