@@ -8,6 +8,7 @@ local monster_generator = require("Modules.JayTheBusinessGoose.monster_generator
 local death_elevators = require("Modules.GetimOliver.death_elevators")
 local timed_doors = require("Modules.GetimOliver.timed_door")
 local inverse_timed_doors = require("Modules.GetimOliver.inverse_timed_door")
+local key_blocks          = require("Modules.GetimOliver.key_blocks")
 
 local dwelling1 = {
     identifier = "dwelling1",
@@ -38,6 +39,7 @@ dwelling1.load_level = function()
     death_blocks.activate(level_state)
     death_elevators.activate(level_state)
     moving_totems.activate(level_state)
+    key_blocks.activate(level_state)
     timed_doors.activate(level_state, 100)
     inverse_timed_doors.activate(level_state, 100)
     monster_generator.activate(level_state, ENT_TYPE.MONS_BAT)
