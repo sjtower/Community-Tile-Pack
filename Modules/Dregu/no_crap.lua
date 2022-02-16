@@ -10,13 +10,13 @@ set_post_entity_spawn(function(ent, flags)
     ent:destroy()
 end, SPAWN_TYPE.LEVEL_GEN_GENERAL, MASK.ITEM)
 
--- destroy embed treasure and items
-set_post_entity_spawn(function(ent, flags)
-    if ent.overlay and (ent.overlay.type.search_flags & MASK.FLOOR) > 0 then
-        ent.flags = set_flag(ent.flags, ENT_FLAG.DEAD)
-        ent:destroy()
-    end
-end, SPAWN_TYPE.LEVEL_GEN_TILE_CODE, 0, crust_items)
+-- destroy embed treasure and items - does not work - crust_items undefined
+-- set_post_entity_spawn(function(ent, flags)
+--     if ent.overlay and (ent.overlay.type.search_flags & MASK.FLOOR) > 0 then
+--         ent.flags = set_flag(ent.flags, ENT_FLAG.DEAD)
+--         ent:destroy()
+--     end
+-- end, SPAWN_TYPE.LEVEL_GEN_TILE_CODE, 0, crust_items)
 
 -- entrance with no textures or pots, just the player
 define_tile_code("entrance_nocrap")
