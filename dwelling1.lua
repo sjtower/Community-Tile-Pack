@@ -12,7 +12,7 @@ local key_blocks          = require("Modules.GetimOliver.key_blocks")
 
 local dwelling1 = {
     identifier = "dwelling1",
-    title = "Dwelling 1",
+    title = "Welcome to the Spelunky 2 Community Tile Pack!",
     theme = THEME.DWELLING,
     width = 6,
     height = 5,
@@ -23,12 +23,6 @@ local level_state = {
     loaded = false,
     callbacks = {},
 }
-
-local saved_checkpoint
-
-local function save_checkpoint(checkpoint)
-    saved_checkpoint = checkpoint
-end
 
 dwelling1.load_level = function()
     if level_state.loaded then return end
@@ -43,27 +37,7 @@ dwelling1.load_level = function()
     timed_doors.activate(level_state, 100)
     inverse_timed_doors.activate(level_state, 100)
     monster_generator.activate(level_state, ENT_TYPE.MONS_BAT)
-
     checkpoints.activate()
-    checkpoints.checkpoint_activate_callback(function(x, y, layer, time)
-        save_checkpoint({
-            position = {
-                x = x,
-                y = y,
-                layer = layer,
-            },
-            time = time,
-        })
-    end)
-
-    if saved_checkpoint then
-        checkpoints.activate_checkpoint_at(
-            saved_checkpoint.position.x,
-            saved_checkpoint.position.y,
-            saved_checkpoint.position.layer,
-            saved_checkpoint.time
-        )
-    end
     
 end
 

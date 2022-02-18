@@ -195,8 +195,34 @@ set_callback(function()
     end
 end, ON.POST_LEVEL_GENERATION)
 
+local saved_checkpoint
+
+local function save_checkpoint(checkpoint)
+    saved_checkpoint = checkpoint
+end
+
 local function activate()
     checkpoint_state.active = true
+
+    checkpoint_activate_callback(function(x, y, layer, time)
+        save_checkpoint({
+            position = {
+                x = x,
+                y = y,
+                layer = layer,
+            },
+            time = time,
+        })
+    end)
+
+    if saved_checkpoint then
+        activate_checkpoint_at(
+            saved_checkpoint.position.x,
+            saved_checkpoint.position.y,
+            saved_checkpoint.position.layer,
+            saved_checkpoint.time
+        )
+    end
 end
 
 local function deactivate()
@@ -210,6 +236,7 @@ local function deactivate()
 end
 
 return {
+    save_checkpoint = save_checkpoint,
     spawn_checkpoint = spawn_checkpoint,
     spawn_checkpoint_flag = spawn_checkpoint_flag,
     activate_checkpoint_at = activate_checkpoint_at,
