@@ -9,6 +9,7 @@ local death_elevators = require("Modules.GetimOliver.death_elevators")
 local timed_doors = require("Modules.GetimOliver.timed_door")
 local inverse_timed_doors = require("Modules.GetimOliver.inverse_timed_door")
 local key_blocks          = require("Modules.GetimOliver.key_blocks")
+local on_off_blocks       = require("Modules.GetimOliver.on_off_blocks")
 
 local dwelling1 = {
     identifier = "dwelling1",
@@ -36,6 +37,7 @@ dwelling1.load_level = function()
     key_blocks.activate(level_state)
     timed_doors.activate(level_state, 100)
     inverse_timed_doors.activate(level_state, 100)
+    on_off_blocks.activate(level_state, 30)
     monster_generator.activate(level_state, ENT_TYPE.MONS_BAT)
     checkpoints.activate()
     
@@ -47,6 +49,9 @@ dwelling1.unload_level = function()
     checkpoints.deactivate()
     timed_doors.deactivate()
     inverse_timed_doors.deactivate()
+    on_off_blocks.deactivate()
+    key_blocks.deactivate()
+    moving_totems.deactivate()
 
     local callbacks_to_clear = level_state.callbacks
     level_state.loaded = false

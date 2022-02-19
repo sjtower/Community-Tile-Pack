@@ -6,7 +6,7 @@ Includes a single level demonstrating each custom Lua tile.
 
 ## How to use
 
-1. Copy the "Modules" directory into your own mod, at the root directory
+1. Copy the "Modules" & "Checkpoints" directory into your own mod, at the root directory
 2. include one of the module in your Lua level file with `requires`. EG:
 
     ```lua

@@ -1,5 +1,7 @@
+local block_keys = {}
+local key_blocks = {}
+
 local function activate(level_state)
-    local key_blocks = {}
     define_tile_code("key_block")
     level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
         local floor_uid = spawn_entity(ENT_TYPE.ACTIVEFLOOR_PUSHBLOCK, x, y, layer, 0, 0)
@@ -10,7 +12,6 @@ local function activate(level_state)
         return true
     end, "key_block")
 
-    local block_keys = {}
     define_tile_code("block_key")
     level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
         local uid = spawn_entity(ENT_TYPE.ITEM_KEY, x, y, layer, 0, 0)
@@ -32,6 +33,12 @@ local function activate(level_state)
     end, "block_key")
 end
 
+local function deactivate()
+    block_keys = {}
+    key_blocks = {}
+end
+
 return {
     activate = activate,
+    deactivate = deactivate
 }
