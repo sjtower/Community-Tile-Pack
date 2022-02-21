@@ -201,6 +201,10 @@ local function save_checkpoint(checkpoint)
     saved_checkpoint = checkpoint
 end
 
+local function get_saved_checkpoint()
+    return saved_checkpoint
+end
+
 local function activate()
     checkpoint_state.active = true
 
@@ -229,6 +233,7 @@ local function deactivate()
     for _, checkpoint in pairs(checkpoint_state.checkpoints) do
         clear_callback(checkpoint.collision)
     end
+    saved_checkpoint = nil
     checkpoint_state.checkpoints = {}
     checkpoint_state.active = false
     checkpoint_state.callback = nil
@@ -237,6 +242,7 @@ end
 
 return {
     save_checkpoint = save_checkpoint,
+    get_saved_checkpoint = get_saved_checkpoint,
     spawn_checkpoint = spawn_checkpoint,
     spawn_checkpoint_flag = spawn_checkpoint_flag,
     activate_checkpoint_at = activate_checkpoint_at,
