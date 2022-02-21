@@ -197,6 +197,12 @@ end, ON.POST_LEVEL_GENERATION)
 
 local saved_checkpoint
 
+set_callback(function()
+    if state.loading == 1 and state.screen_next == SCREEN.TRANSITION then
+        saved_checkpoint = nil
+    end
+end, ON.LOADING)
+
 local function save_checkpoint(checkpoint)
     saved_checkpoint = checkpoint
 end
@@ -233,7 +239,6 @@ local function deactivate()
     for _, checkpoint in pairs(checkpoint_state.checkpoints) do
         clear_callback(checkpoint.collision)
     end
-    saved_checkpoint = nil
     checkpoint_state.checkpoints = {}
     checkpoint_state.active = false
     checkpoint_state.callback = nil
