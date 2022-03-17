@@ -4,23 +4,10 @@ meta.description = 'A collection of custom Lua tiles from the Spelunky 2 Communi
 meta.author = 'GetimOliver, Dregu, JayTheBusinessGoose, JawnGC'
 
 local level_sequence = require("LevelSequence/level_sequence")
-local sound = require('play_sound')
-local clear_embeds = require('clear_embeds')
-local save_state = require('save_state')
 
 local dwelling1 = require("dwelling1")
 
 level_sequence.set_levels({dwelling1})
-
--- Store the save context in a local var so we can save whenever we want.
-local save_context
-
--- todo: implement saving
-local initial_bombs = 0
-local initial_ropes = 0
-local game_state = {
-
-}
 
 --------------------------------------
 ---- SOUNDS
@@ -114,9 +101,6 @@ set_callback(function()
 	if not active then return end
 	active = false
 	level_sequence.deactivate()
-	telescopes.deactivate()
-	button_prompts.deactivate()
-	action_signs.deactivate()
 
 	for _, callback in pairs(callbacks) do
 		clear_callback(callback)

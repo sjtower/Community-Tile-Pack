@@ -66,13 +66,14 @@
 \?timed_door_switch                F
 \?timed_door                       G
 \?monster_generator                H
-\?monster_switch                   I
 \?checkpoint                       J
 \?shotgun                          K
 \?fast_push_block                  N
 \?on_off_switch                    O
 \?on_block                         S
 \?off_block                        T
+\?sign                             U
+\?monster_switch                   V
 
 
 
@@ -186,8 +187,8 @@
 
 0000000000
 00========
-00=000H000
-00=00000I0
+00=0000H00
+00=00000V0
 00=^0J0000
 00=1======
 00=0000000
@@ -281,7 +282,7 @@
 ppp=======
 0000000000
 0000000000
-(000000000
+(0000U0U0U
 ppp=======
 0000000000
 

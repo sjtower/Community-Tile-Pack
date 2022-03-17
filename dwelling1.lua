@@ -5,6 +5,7 @@ local fast_push_blocks = require("Modules.Dregu.fast_push_block")
 local death_blocks = require("Modules.JawnGC.death_blocks")
 local moving_totems = require("Modules.JayTheBusinessGoose.moving_totems")
 local monster_generator = require("Modules.JayTheBusinessGoose.monster_generator")
+local signs = require("Modules.JayTheBusinessGoose.signs")
 local death_elevators = require("Modules.GetimOliver.death_elevators")
 local timed_doors = require("Modules.GetimOliver.timed_door")
 local inverse_timed_doors = require("Modules.GetimOliver.inverse_timed_door")
@@ -40,6 +41,7 @@ dwelling1.load_level = function()
     on_off_blocks.activate(level_state, 30)
     monster_generator.activate(level_state, ENT_TYPE.MONS_BAT)
     checkpoints.activate()
+    signs.activate(level_state, {"Sign 1", "2", "Three"})
     
 end
 
@@ -52,6 +54,7 @@ dwelling1.unload_level = function()
     on_off_blocks.deactivate()
     key_blocks.deactivate()
     moving_totems.deactivate()
+    signs.deactivate()
 
     local callbacks_to_clear = level_state.callbacks
     level_state.loaded = false
