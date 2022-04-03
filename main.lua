@@ -10,24 +10,6 @@ local dwelling1 = require("dwelling1")
 level_sequence.set_levels({dwelling1})
 
 --------------------------------------
----- SOUNDS
---------------------------------------
-
-local function spring_volume_callback()
-	-- Make spring traps quieter.
-	return set_vanilla_sound_callback(VANILLA_SOUND.TRAPS_SPRING_TRIGGER, VANILLA_SOUND_CALLBACK_TYPE.STARTED, function(playing_sound)
-		playing_sound:set_volume(.3)
-	end)
-end
-
-local function sign_mute_callback()
-	-- Mute the vocal sound that was playing on the signs when they "say" something.
-	return set_vanilla_sound_callback(VANILLA_SOUND.UI_NPC_VOCAL, VANILLA_SOUND_CALLBACK_TYPE.STARTED, function(playing_sound)
-		playing_sound:set_volume(0)
-	end)
-end
-
---------------------------------------
 ---- /SOUNDS
 --------------------------------------
 

@@ -37,15 +37,18 @@ local function activate(level_state, time)
         on_off_switches[#on_off_switches + 1] = switch
         local switch_timer = time
         local sound = get_sound(VANILLA_SOUND.SHARED_DOOR_UNLOCK)
+        local isActive = false
         set_on_damage(switch.uid, function(self)
-            if self.timer > 0 then return end
+            if self.timer > 0 or isActive then return end
             self.timer = switch_timer
             self.animation_frame = self.animation_frame == 86 and 96 or 86
             toggle_blocks()
             sound:play()
+            isActive = true
             set_timeout(function() --switch goes back into place
                 self.animation_frame = self.animation_frame == 86 and 96 or 86
                 self.timer = 0
+                isActive = false
             end, switch_timer)
         end)
     end, "on_off_switch")

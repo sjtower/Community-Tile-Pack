@@ -59,7 +59,7 @@
 \?slidingwall_switch               ;
 \?key_block                        <
 \?block_key                        >
-\?death_elevator                   ?
+\?custom_death_block               ?
 \?death_block                      @
 \?inverse_timed_door_switch        C
 \?inverse_timed_door               D
@@ -86,7 +86,7 @@
 11-10*050*
 1151000500
 0070000500
-0E00000500
+0000000500
 1100000500
 11^^^^^^00
 
@@ -264,7 +264,7 @@
 \.setroom2_2   // cave
 ////////////////////////////////////////////////////////////////////////////////
 
-00=0DC0GF0
+00=CDCFGF0
 00=0D00G00
 ==========
 =00S000T00
