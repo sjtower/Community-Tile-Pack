@@ -1,3 +1,4 @@
+local sound = require('play_sound')
 
 local poor_money_gates = {}
 local middle_class_money_gates = {}

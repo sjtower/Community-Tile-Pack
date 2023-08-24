@@ -11,6 +11,17 @@ local timed_doors = require("Modules.GetimOliver.timed_door")
 local inverse_timed_doors = require("Modules.GetimOliver.inverse_timed_door")
 local key_blocks          = require("Modules.GetimOliver.key_blocks")
 local on_off_blocks       = require("Modules.GetimOliver.on_off_blocks")
+local locked_exits = require("Modules.GetimOliver.locked_exits")
+local breaking_blocks = require("Modules.GetimOliver.breaking_blocks")
+local one_way_walls = require("Modules.GetimOliver.one_way_walls")
+local player_only_blocks = require("Modules.GetimOliver.player_only_blocks")
+local dustwalls = require("Modules.Dregu.dustwalls")
+local one_way_platforms = require("Modules.GetimOliver.one_way_platforms")
+local no_player_blocks = require("Modules.GetimOliver.no_player_blocks")
+local money_gates = require("Modules.GetimOliver.money_gates")
+local telescopes = require("Telescopes/telescopes")
+
+
 
 local dwelling1 = {
     identifier = "dwelling1",
@@ -42,6 +53,14 @@ dwelling1.load_level = function()
     monster_generator.activate(level_state, ENT_TYPE.MONS_BAT)
     checkpoints.activate()
     signs.activate(level_state, {"Sign 1", "2", "Three"})
+
+    locked_exits.activate(level_state)
+    breaking_blocks.activate(level_state)
+    one_way_walls.activate(level_state)
+    one_way_platforms.activate(level_state)
+    player_only_blocks.activate(level_state)
+    no_player_blocks.activate(level_state)
+    money_gates.activate(level_state, 1000, 10000, 50000)
     
 end
 
@@ -55,7 +74,14 @@ dwelling1.unload_level = function()
     key_blocks.deactivate()
     moving_totems.deactivate()
     signs.deactivate()
-    death_blocks.deactivate()
+    
+    locked_exits.deactivate()
+    breaking_blocks.deactivate()
+    one_way_walls.deactivate()
+    one_way_platforms.deactivate()
+    player_only_blocks.deactivate()
+    no_player_blocks.deactivate()
+    money_gates.deactivate()
 
     local callbacks_to_clear = level_state.callbacks
     level_state.loaded = false

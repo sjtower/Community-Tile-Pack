@@ -17,7 +17,7 @@ local function toggle_blocks()
         local flags = get_entity_flags(block.uid)
         if test_flag(flags, ENT_FLAG.LOCKED) then --LOCKED == red
             if test_flag(flags, ENT_FLAG.SOLID) then
-				block.color:set_rgba(255, 40, 0, 150) --Red, Transparent
+				block.color:set_rgba(255, 40, 0, 100) --Red, Transparent
                 block.flags = clr_flag(block.flags, ENT_FLAG.SOLID)
             else
                 block.color:set_rgba(255, 40, 0, 255) --Red, Solid
@@ -25,7 +25,7 @@ local function toggle_blocks()
             end
         else
             if test_flag(flags, ENT_FLAG.SOLID) then
-                block.color:set_rgba(0, 100, 255, 150) --Light Blue, Transparent
+                block.color:set_rgba(0, 100, 255, 100) --Light Blue, Transparent
                 block.flags = clr_flag(block.flags, ENT_FLAG.SOLID)
             else
                 block.color:set_rgba(0, 100, 255, 255) --Light Blue, Solid
@@ -68,7 +68,7 @@ local function activate(level_state, time)
         ent:set_texture(on_off_block_texture())
         ent.flags = set_flag(ent.flags, ENT_FLAG.NO_GRAVITY)
         ent.flags = clr_flag(ent.flags, ENT_FLAG.SOLID)
-        ent.color:set_rgba(0, 100, 255, 150) --Light Blue, Transparent
+        ent.color:set_rgba(0, 100, 255, 100) --Light Blue, Transparent
         ent.more_flags = set_flag(ent.more_flags, ENT_MORE_FLAG.DISABLE_INPUT) --Unpushable
         on_off_blocks[#on_off_blocks + 1] = ent
         return true
