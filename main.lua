@@ -66,9 +66,6 @@ local function activate()
 
 	add_callback(camp_bounds_callback())
 	add_callback(undo_camp_bounds_callback())
-
-	add_vanilla_sound_callback(spring_volume_callback())
-	add_vanilla_sound_callback(sign_mute_callback())
 end
 
 set_callback(function()
