@@ -1,6 +1,17 @@
 local on_off_blocks = {};
 local on_off_switches = {};
 
+local texture_definition = TextureDefinition.new()
+texture_definition.width = 128
+texture_definition.height = 128
+texture_definition.tile_width = 128
+texture_definition.tile_height = 128
+local function on_off_block_texture() 
+    texture_definition.texture_path = f'Modules/GetimOliver/Textures/on_off_block.png'
+    local active_texture = define_texture(texture_definition)
+    return active_texture
+end
+
 local function toggle_blocks() 
     for _, block in ipairs(on_off_blocks) do
         local flags = get_entity_flags(block.uid)
@@ -37,18 +48,15 @@ local function activate(level_state, time)
         on_off_switches[#on_off_switches + 1] = switch
         local switch_timer = time
         local sound = get_sound(VANILLA_SOUND.SHARED_DOOR_UNLOCK)
-        local isActive = false
         set_on_damage(switch.uid, function(self)
-            if self.timer > 0 or isActive then return end
+            if self.timer > 0 then return end
             self.timer = switch_timer
             self.animation_frame = self.animation_frame == 86 and 96 or 86
             toggle_blocks()
             sound:play()
-            isActive = true
             set_timeout(function() --switch goes back into place
                 self.animation_frame = self.animation_frame == 86 and 96 or 86
                 self.timer = 0
-                isActive = false
             end, switch_timer)
         end)
     end, "on_off_switch")
@@ -57,6 +65,7 @@ local function activate(level_state, time)
     level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
         local ent_id = spawn_entity(ENT_TYPE.ACTIVEFLOOR_PUSHBLOCK, x, y, layer, 0, 0)
         local ent = get_entity(ent_id)
+        ent:set_texture(on_off_block_texture())
         ent.flags = set_flag(ent.flags, ENT_FLAG.NO_GRAVITY)
         ent.flags = clr_flag(ent.flags, ENT_FLAG.SOLID)
         ent.color:set_rgba(0, 100, 255, 150) --Light Blue, Transparent
@@ -69,6 +78,7 @@ local function activate(level_state, time)
     level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
         local ent_id = spawn_entity(ENT_TYPE.ACTIVEFLOOR_PUSHBLOCK, x, y, layer, 0, 0)
         local ent = get_entity(ent_id)
+        ent:set_texture(on_off_block_texture())
         ent.flags = set_flag(ent.flags, ENT_FLAG.NO_GRAVITY)
         ent.color:set_rgba(255, 40, 0, 250) --Red, Solid
         ent.flags = set_flag(ent.flags, ENT_FLAG.SOLID)
