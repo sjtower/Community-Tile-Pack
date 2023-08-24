@@ -18,23 +18,33 @@ local function activate(level_state)
 
     define_tile_code("no_player_block")
     level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
-        local ent_uid = spawn_entity(ENT_TYPE.ACTIVEFLOOR_PUSHBLOCK, x, y, layer, 0, 0)
+        local ent_uid = spawn_entity(ENT_TYPE.ITEM_WEB, x, y, layer, 0, 0)
         local ent = get_entity(ent_uid)
         ent:set_texture(player_only_block_texture())
 
         -- ent.color:set_rgba(0, 0, 0, 150) --Transparent
+        ent.hitboxy = 0.45
 
-        ent.flags = set_flag(ent.flags, ENT_FLAG.NO_GRAVITY)
-        -- ent.flags = clr_flag(ent.flags, ENT_FLAG.SOLID)
-        -- ent.more_flags = set_flag(ent.more_flags, ENT_MORE_FLAG.DISABLE_INPUT)
+        ent.flags = clr_flag(ent.flags, ENT_FLAG.SOLID)
+        ent.flags = set_flag(ent.flags, ENT_FLAG.PASSES_THROUGH_PLAYER)
+        ent.flags = set_flag(ent.flags, ENT_FLAG.PASSES_THROUGH_OBJECTS)
 
         no_player_blocks[#no_player_blocks + 1] = get_entity(ent_uid)
         set_pre_collision2(ent_uid, function(self, collision_entity)
-            if collision_entity.uid == players[1].uid then
-                ent.flags = set_flag(ent.flags, ENT_FLAG.SOLID)
-            else
-                ent.flags = clr_flag(ent.flags, ENT_FLAG.SOLID)
+            if collision_entity.uid == players[1].uid then 
+                if x > collision_entity.x + 0.25 then
+                    collision_entity.velocityx = -0.1
+                elseif x + 0.25 < collision_entity.x then
+                    collision_entity.velocityx = 0.1
+                end
+                if y > collision_entity.y + 0.25 then
+                    collision_entity.velocityy = -0.1
+                end
+                if y + 0.25 < collision_entity.y then
+                    collision_entity.velocityy = 0.1
+                end
             end
+            return true
         end)
         return true
     end, "no_player_block")
@@ -42,8 +52,6 @@ end
 
 local function deactivate()
     no_player_blocks = {}
-    if #players < 1 then return end
-    players[1].flags = set_flag(players[1].flags, ENT_FLAG.INTERACT_WITH_WEBS)
 end
 
 return {

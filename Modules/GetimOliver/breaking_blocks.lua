@@ -28,7 +28,6 @@ local function activate(level_state)
 
         local x, y, l = get_position(players[1].uid)
 
-
         for i, block in ipairs(right_blocks) do
             if x > block.x + 0.25 and players[1].standing_on_uid == right_blocks[i].uid then
                 kill_entity(block.uid)
