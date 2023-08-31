@@ -2,14 +2,27 @@ local locked_exits = {}
 local exit_keys = {}
 local key_blocks = {}
 
-local texture_definition = TextureDefinition.new()
-texture_definition.width = 128
-texture_definition.height = 128
-texture_definition.tile_width = 128
-texture_definition.tile_height = 128
+local locked_door_texture_definition = TextureDefinition.new()
+locked_door_texture_definition.width = 128
+locked_door_texture_definition.height = 128
+locked_door_texture_definition.tile_width = 128
+locked_door_texture_definition.tile_height = 128
+
 local function locked_door_texture() 
-    texture_definition.texture_path = f'Modules/GetimOliver/Textures/locked_door_1.png'
-    local active_texture = define_texture(texture_definition)
+    locked_door_texture_definition.texture_path = f'Modules/GetimOliver/Textures/locked_door_1.png'
+    local active_texture = define_texture(locked_door_texture_definition)
+    return active_texture
+end
+
+local locked_door_key_texture_definition = TextureDefinition.new()
+locked_door_key_texture_definition.width = 128
+locked_door_key_texture_definition.height = 128
+locked_door_key_texture_definition.tile_width = 128
+locked_door_key_texture_definition.tile_height = 128
+
+local function locked_door_key_texture() 
+    locked_door_key_texture_definition.texture_path = f'Modules/GetimOliver/Textures/locked_exit_key.png'
+    local active_texture = define_texture(locked_door_key_texture_definition)
     return active_texture
 end
 
@@ -47,7 +60,7 @@ local function activate(level_state)
     level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
         local uid = spawn_entity(ENT_TYPE.ITEM_KEY, x, y, layer, 0, 0)
         local key = get_entity(uid)
-        key.color = Color:white()
+        key:set_texture(locked_door_key_texture())
         exit_keys[#exit_keys + 1] = get_entity(uid)
         set_pre_collision2(key.uid, function(self, collision_entity)
             for _, exit_key_block in ipairs(key_blocks) do

@@ -19,6 +19,12 @@ local function one_way_down_texture()
     return active_texture
 end
 
+local function one_way_platform_texture() 
+    texture_definition.texture_path = f'Modules/GetimOliver/Textures/one_way_platform.png'
+    local active_texture = define_texture(texture_definition)
+    return active_texture
+end
+
 local function activate(level_state)
 
     define_tile_code("one_way_up")
@@ -37,6 +43,7 @@ local function activate(level_state)
 
         up_blocks[#up_blocks + 1] = get_entity(block_uid)
         set_pre_collision2(block_uid, function(self, collidee)
+            if collidee.type.id == ENT_TYPE.ITEM_WHIP then return true end
             if collidee.velocityy < 0.1 then collidee.velocityy = 0.1 end
             return true
         end)
@@ -45,7 +52,6 @@ local function activate(level_state)
 
     define_tile_code("one_way_down")
     level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
-        local platform_uid = spawn_entity(ENT_TYPE.FLOOR_PLATFORM, x, y, layer, 0, 0)
         local block_uid = spawn_entity(ENT_TYPE.ITEM_WEB, x, y, layer, 0, 0)
         local block = get_entity(block_uid)
         
@@ -59,11 +65,35 @@ local function activate(level_state)
 
         down_blocks[#down_blocks + 1] = get_entity(block_uid)
         set_pre_collision2(block_uid, function(self, collidee)
+            if collidee.type.id == ENT_TYPE.ITEM_WHIP then return true end
             if collidee.velocityy > -0.1 then collidee.velocityy = -0.1 end
             return true
         end)
         return true
     end, "one_way_down")
+
+    define_tile_code("one_way_platform")
+    level_state.callbacks[#level_state.callbacks+1] = set_pre_tile_code_callback(function(x, y, layer)
+        local platform_uid = spawn_entity(ENT_TYPE.FLOOR_PLATFORM, x, y, layer, 0, 0)
+        local block_uid = spawn_entity(ENT_TYPE.ITEM_WEB, x, y, layer, 0, 0)
+        local block = get_entity(block_uid)
+        
+        block.flags = set_flag(block.flags, ENT_FLAG.PASSES_THROUGH_PLAYER)
+        block.flags = clr_flag(block.flags, ENT_FLAG.SOLID)
+
+        block.hitboxy = 0.20
+        block.hitboxx = 0.5
+        
+        block:set_texture(one_way_platform_texture())
+
+        down_blocks[#down_blocks + 1] = get_entity(block_uid)
+        set_pre_collision2(block_uid, function(self, collidee)
+            if collidee.type.id == ENT_TYPE.ITEM_WHIP then return true end
+            if collidee.velocityy > -0.1 then collidee.velocityy = -0.1 end
+            return true
+        end)
+        return true
+    end, "one_way_platform")
 end
 
 local function deactivate()

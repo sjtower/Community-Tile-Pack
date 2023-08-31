@@ -30,12 +30,13 @@ local function activate(level_state)
         block.flags = clr_flag(block.flags, ENT_FLAG.SOLID)
         
         block.hitboxy = 0.45
-        block.hitboxx = 0.5
+        block.hitboxx = 0.40
 
         block:set_texture(one_way_right_texture())
 
         right_blocks[#right_blocks + 1] = get_entity(block_uid)
         set_pre_collision2(block_uid, function(self, collidee)
+            if collidee.type.id == ENT_TYPE.ITEM_WHIP then return true end
             if collidee.velocityx < 0.1 then collidee.velocityx = 0.1 end
             return true
         end)
@@ -57,6 +58,7 @@ local function activate(level_state)
 
         left_blocks[#left_blocks + 1] = get_entity(block_uid)
         set_pre_collision2(block_uid, function(self, collidee)
+            if collidee.type.id == ENT_TYPE.ITEM_WHIP then return true end
             if collidee.velocityx > -0.1 then collidee.velocityx = -0.1 end
             return true
         end)
