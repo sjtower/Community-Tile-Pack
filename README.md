@@ -6,7 +6,7 @@ Includes a single level demonstrating each custom Lua tile.
 
 ## How to use
 
-1. Copy the "Modules" & "Checkpoints" directory into your own mod, at the root directory
+1. Copy the "Modules", "Checkpoints", and "Telescopes" directories into your own mod, at the root directory
 2. include one of the module in your Lua level file with `requires`. EG:
 
     ```lua
@@ -39,14 +39,20 @@ Let me know if you need any help working with these mods.
 ## Included Mods
 
 - checkpoints
+- one-way walls (up, down, left, & right)
+- one-way platforms
+- blocks that break with a key
+- locked exits with special key
+- custom death blocks
+- walls that break with a switch
+- floors that break going left or right over them
+- no-player blocks
+- player-only blocks
+- timed doors
+- inverse timed doors
+- blocks that break at certain money thresholds
 - faster bullets
 - fast push blocks
-- death blocks
-- death elevators
-- breakable walls
-- blocks that break with a key
-- timed doors
-- reverse timed doors
 - monster generator
 
 Contribute your custom Lua tiles - DM me on Discord, or create a pull request in the [Github repo](https://github.com/sjtower/Community-Tile-Pack)
